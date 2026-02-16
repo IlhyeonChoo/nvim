@@ -18,6 +18,19 @@ if not is_remote then
     vim.opt.clipboard = "unnamedplus"
 end
 
+-- 외부(다른 세션/사용자)에서 파일이 수정되면 자동으로 다시 읽기
+-- 주의: 현재 버퍼에 미저장 변경이 있으면 안전을 위해 자동 덮어쓰지 않고 경고만 뜹니다.
+vim.opt.autoread = true
+local autoread_group = vim.api.nvim_create_augroup("AutoReadOnExternalChange", { clear = true })
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    group = autoread_group,
+    callback = function()
+        if vim.fn.mode() ~= "c" then
+            vim.cmd("checktime")
+        end
+    end,
+})
+
 
 -- 배경 투명화 설정
 vim.api.nvim_create_autocmd("ColorScheme", {

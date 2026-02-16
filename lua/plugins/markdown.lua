@@ -2,11 +2,12 @@
 return {
   {
     "jakewvincent/mkdnflow.nvim",
-    ft = { "markdown" },
+    ft = { "markdown", "rmd" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("mkdnflow").setup({
-        filetypes = { md = true, markdown = true, rmarkdown = true },
+        -- mkdnflow v2.8+: 확장자(md) 대신 Neovim filetype(markdown, rmd) 사용
+        filetypes = { markdown = true, rmd = true },
         mappings = {
           -- which-key 그룹을 피하기 위해 접기/펼치기를 <leader>mf/<leader>mF로 재매핑
           MkdnFoldSection = { 'n', '<leader>mf' },
