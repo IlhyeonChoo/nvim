@@ -2,10 +2,15 @@
 local vault = vim.env.OBSIDIAN_VAULT or vim.fn.expand("~/Obsidian")
 local fs = vim.uv or vim.loop
 
+local function is_dir(path)
+  local stat = fs.fs_stat(path)
+  return stat and stat.type == "directory"
+end
+
 -- 주기별 노트 생성/열기 헬퍼
 local function open_periodic_note(folder, filename, template)
   local dir = vault .. "/" .. folder
-  if not fs.fs_stat(dir) then
+  if not is_dir(dir) then
     vim.fn.mkdir(dir, "p")
   end
   local filepath = dir .. "/" .. filename .. ".md"
@@ -21,6 +26,9 @@ end
 return {
   "epwalsh/obsidian.nvim",
   version = "*",
+  enabled = function()
+    return is_dir(vault)
+  end,
   ft = "markdown",
   dependencies = { "nvim-lua/plenary.nvim" },
   cmd = {
@@ -48,8 +56,7 @@ return {
     { "<leader>zt", "<cmd>ObsidianTemplate<cr>", desc = "Obsidian: 템플릿 삽입" },
   },
   config = function()
-    if not fs.fs_stat(vault) then
-      vim.notify("obsidian.nvim: vault not found at " .. vault .. " (set $OBSIDIAN_VAULT)", vim.log.levels.WARN)
+    if not is_dir(vault) then
       return
     end
 
