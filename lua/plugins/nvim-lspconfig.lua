@@ -13,8 +13,14 @@ return {
 
     local servers = require("mason-lspconfig").get_installed_servers()
     local function configure(name, overrides)
-      local base = { on_attach = on_attach, capabilities = capabilities }
-      local opts = vim.tbl_deep_extend("force", base, overrides or {})
+      local opts = vim.tbl_deep_extend("force", { capabilities = capabilities }, overrides or {})
+      local custom_on_attach = opts.on_attach
+      opts.on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        if custom_on_attach and custom_on_attach ~= on_attach then
+          custom_on_attach(client, bufnr)
+        end
+      end
       vim.lsp.config(name, opts)
       vim.lsp.enable(name)
     end

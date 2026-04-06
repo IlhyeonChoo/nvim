@@ -42,28 +42,28 @@ vim.keymap.set("n", "<leader>as", function() require('aerial').fzf() end, { desc
 
 -- 플러그인 초기화는 lua/plugins/harpoon.lua에서 수행
 local harpoon = require("harpoon")
-vim.keymap.set("n", "<leader>aa", function()
+vim.keymap.set("n", "<leader>ja", function()
 	harpoon:list():add()
 end, { desc = "Harpoon: 파일 추가" })
-vim.keymap.set("n", "<C-e>", function()
+vim.keymap.set("n", "<leader>jm", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon: 퀵 메뉴" })
-vim.keymap.set("n", "<C-h>", function()
+vim.keymap.set("n", "<leader>j1", function()
 	harpoon:list():select(1)
 end, { desc = "Harpoon: 1번 파일로 이동" })
-vim.keymap.set("n", "<C-t>", function()
+vim.keymap.set("n", "<leader>j2", function()
 	harpoon:list():select(2)
 end, { desc = "Harpoon: 2번 파일로 이동" })
-vim.keymap.set("n", "<C-n>", function()
+vim.keymap.set("n", "<leader>j3", function()
 	harpoon:list():select(3)
 end, { desc = "Harpoon: 3번 파일로 이동" })
-vim.keymap.set("n", "<C-s>", function()
+vim.keymap.set("n", "<leader>j4", function()
 	harpoon:list():select(4)
 end, { desc = "Harpoon: 4번 파일로 이동" })
-vim.keymap.set("n", "<C-S-P>", function()
+vim.keymap.set("n", "<leader>jp", function()
 	harpoon:list():prev()
 end, { desc = "Harpoon: 이전 파일" })
-vim.keymap.set("n", "<C-S-N>", function()
+vim.keymap.set("n", "<leader>jn", function()
 	harpoon:list():next()
 end, { desc = "Harpoon: 다음 파일" })
 
@@ -118,8 +118,16 @@ vim.keymap.set("n", "<leader>bl", "<Cmd>BufferOrderByLanguage<CR>", { desc = "Ba
 vim.keymap.set("n", "<leader>bw", "<Cmd>BufferOrderByWindowNumber<CR>", { desc = "Barbar: 윈도우순 정렬" })
 
 -- ===== toggleterm =====
-vim.api.nvim_set_keymap("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-\\>", ":ToggleTerm<CR>", { noremap = true, silent = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {
+	noremap = true,
+	silent = true,
+	desc = "Terminal: 일반 모드로 전환",
+})
+vim.keymap.set("n", "<C-\\>", "<cmd>ToggleTerm<CR>", {
+	noremap = true,
+	silent = true,
+	desc = "Terminal: 토글",
+})
 
 -- ===== vim-bookmarks & fzf-lua =====
 vim.keymap.set("n", "mm", "<cmd>BookmarkToggle<cr>", { desc = "Bookmark: 토글" })
