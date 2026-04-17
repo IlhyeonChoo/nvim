@@ -1,3 +1,0 @@
-let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'/home/ilhyeonchu/dotfiles/nvim/.config/nvim/NEW_PLUGINS_GUIDE.md': [{'sign_idx': 9500, 'line_nr': 64, 'content': '#### 2. 주석(Annotation) 활용 (`mi`)'},{'sign_idx': 9501, 'line_nr': 51, 'content': '| `mm` | Toggle Mark | 현재 줄에 북마크를 추가하거나 제거 (아이콘: 🔖) |'},],}}
-let l:bm_current_session = 'default'
