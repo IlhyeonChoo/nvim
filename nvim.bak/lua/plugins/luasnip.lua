@@ -1,0 +1,11 @@
+-- luasnip: 코드 스니펫(자주 사용하는 코드 조각)을 관리하고 사용하는 플러그인
+return {
+	"L3MON4D3/LuaSnip",
+	-- follow latest release.
+	version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	-- install jsregexp (optional!).
+	build = "make install_jsregexp",
+  opts = function ()
+    require("luasnip.loaders.from_vscode").lazy_load({ paths = { "/Users/eshaj/.config/nvim/snippets" }})
+  end,
+}
