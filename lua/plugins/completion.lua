@@ -31,6 +31,19 @@ return {
       local cmp = require("cmp")
       local neotab = require("neotab")
       opts.mapping = opts.mapping or {}
+      opts.window = opts.window or {}
+      opts.window.documentation = vim.tbl_deep_extend("force", opts.window.documentation or {}, {
+        winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder,Search:None",
+      })
+
+      local function has_words_before()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        if col == 0 then
+          return false
+        end
+        local text = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+        return text:sub(col, col):match("%s") == nil
+      end
 
       local function snippet_forward()
         if vim.snippet.active({ direction = 1 }) then
@@ -52,14 +65,21 @@ return {
         return false
       end
 
-      opts.mapping["<tab>"] = cmp.mapping(function()
-        LazyVim.cmp.confirm({ select = true })(function()
-          if snippet_forward() then
-            return
-          end
-          neotab.tabout()
-        end)
+      opts.mapping["<Tab>"] = cmp.mapping(function()
+        if cmp.visible() then
+          cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert })
+          return
+        end
+        if snippet_forward() then
+          return
+        end
+        if has_words_before() then
+          cmp.complete()
+          return
+        end
+        neotab.tabout()
       end, { "i", "s" })
+      opts.mapping["<tab>"] = opts.mapping["<Tab>"]
 
       opts.mapping["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then

@@ -14,6 +14,12 @@ return {
       float = {
         transparent = true,
       },
+      custom_highlights = function(colors)
+        return {
+          CmpDoc = { bg = colors.mantle, fg = colors.text },
+          CmpDocBorder = { bg = colors.mantle, fg = colors.surface2 },
+        }
+      end,
     },
   },
 }
