@@ -1,0 +1,11 @@
+[project]
+name = "neovim-practice"
+version = "0.1.0"
+description = "Small Python project for practicing Neovim features."
+requires-python = ">=3.11"
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+include = ["nevipractice", "tests"]
+
