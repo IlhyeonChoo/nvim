@@ -73,10 +73,6 @@ return {
         if snippet_forward() then
           return
         end
-        if has_words_before() then
-          cmp.complete()
-          return
-        end
         neotab.tabout()
       end, { "i", "s" })
       opts.mapping["<tab>"] = opts.mapping["<Tab>"]
@@ -89,7 +85,16 @@ return {
         if snippet_backward() then
           return
         end
+        local cursor_before = vim.api.nvim_win_get_cursor(0)
         neotab.tabreverse()
+        local cursor_after = vim.api.nvim_win_get_cursor(0)
+        if cursor_before[1] ~= cursor_after[1] or cursor_before[2] ~= cursor_after[2] then
+          return
+        end
+        if has_words_before() then
+          cmp.complete()
+          return
+        end
       end, { "i", "s" })
 
       opts.mapping["<CR>"] = cmp.mapping(function(fallback)
