@@ -26,6 +26,9 @@ return {
     end,
     opts = {
       servers = {
+        pyrefly = {
+          enabled = false,
+        },
         bashls = {
           filetypes = { "sh", "bash", "zsh" },
         },
